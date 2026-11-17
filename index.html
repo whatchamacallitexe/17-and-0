@@ -1,42 +1,27 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>17-0 | Build a Perfect Team</title>
   <meta name="description" content="Build a 17-0 NFL team: spin for a franchise and era, draft legends, and simulate a perfect season.">
+  <meta http-equiv="refresh" content="0; url=https://www.firstdown.studio/build-a-17-0-team">
   <style>
-    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #11100f; }
-    iframe { display: block; width: 100%; height: 100%; border: 0; background: #11100f; }
-    #fallback { position: fixed; inset: 0; z-index: 1; display: flex; align-items: center; justify-content: center; padding: 24px; background: #11100f; color: #f5f1e8; font: 15px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; text-align: center; }
-    #fallback.hidden { display: none; }
-    #fallback a { color: #ffb45c; font-weight: 700; }
-    .fallback-box { max-width: 460px; }
-    .fallback-kicker { color: #ffb45c; font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
-    .fallback-title { margin: 10px 0 8px; font-size: clamp(38px, 8vw, 72px); font-weight: 900; letter-spacing: -.04em; line-height: .9; }
-    .fallback-copy { margin: 0 0 18px; color: #bdb6aa; }
+    html, body { width: 100%; height: 100%; margin: 0; background: #11100f; }
+    body { display: flex; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box; color: #f5f1e8; font: 15px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; text-align: center; }
+    a { color: #ffb45c; font-weight: 700; }
+    .kicker { color: #ffb45c; font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
+    h1 { margin: 10px 0 8px; font-size: clamp(38px, 8vw, 72px); font-weight: 900; letter-spacing: -.04em; line-height: .9; }
   </style>
+  <script>
+    window.location.replace("https://www.firstdown.studio/build-a-17-0-team");
+  </script>
 </head>
 <body>
-  <iframe id="game" src="https://www.firstdown.studio/build-a-17-0-team" title="17-0 — Build a Perfect Team" allow="fullscreen; autoplay; clipboard-write" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-  <div id="fallback">
-    <div class="fallback-box">
-      <div class="fallback-kicker">First Down Studio</div>
-      <h1 class="fallback-title">17–0</h1>
-      <p class="fallback-copy">The game is loading. If it does not appear, open it directly.</p>
-      <a href="https://www.firstdown.studio/build-a-17-0-team" target="_blank" rel="noopener">Play 17-0 in a new tab</a>
-    </div>
+  <div>
+    <div class="kicker">First Down Studio</div>
+    <h1>17–0</h1>
+    <p>Loading the game… If it does not open, <a href="https://www.firstdown.studio/build-a-17-0-team">play 17-0 here</a>.</p>
   </div>
-  <script>
-    (function () {
-      var frame = document.getElementById('game');
-      var fallback = document.getElementById('fallback');
-      var timeout = setTimeout(function () { fallback.classList.remove('hidden'); }, 8000);
-      frame.addEventListener('load', function () {
-        clearTimeout(timeout);
-        fallback.classList.add('hidden');
-      });
-    })();
-  </script>
 </body>
 </html>
