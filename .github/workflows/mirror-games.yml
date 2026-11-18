@@ -1,0 +1,44 @@
+name: Mirror First Down sidebar games
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/mirror-games.cjs
+      - .github/workflows/mirror-games.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mirror-firstdown-games
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Mirror the games
+        run: node scripts/mirror-games.cjs
+
+      - name: Commit the mirror
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Mirror the First Down sidebar games (82-0, 162-0, GOAT)"
+          git push
