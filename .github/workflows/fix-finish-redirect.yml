@@ -1,0 +1,48 @@
+name: Fix finish redirect
+
+# Temporary helper: after the 13th pick the build calls the Next router and
+# leaves the team builder for the results route. Removing that one call keeps
+# the finished roster on screen. The job deletes itself in the same commit.
+
+on:
+  push:
+    paths:
+      - .github/workflows/fix-finish-redirect.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the site
+        uses: actions/checkout@v4
+
+      - name: Drop the results navigation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('_next/static/chunks/8416.1e9a80182634173c.js')
+          text = path.read_text(encoding='utf-8', errors='replace')
+          old = ',(0,f.ts)({href:"/17-and-0/build-a-17-0-team/results",Transition:H})'
+          if old not in text:
+              raise SystemExit('results redirect call not found')
+          path.write_text(text.replace(old, ',0'), encoding='utf-8')
+          print('patched', path)
+          PY
+
+      - name: Commit and remove the helper
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm -q .github/workflows/fix-finish-redirect.yml
+          git add _next/static/chunks/8416.1e9a80182634173c.js
+          git commit -m "Keep the finished team on screen instead of jumping to the results page"
+          git push
